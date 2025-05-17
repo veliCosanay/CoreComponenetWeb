@@ -1,0 +1,44 @@
+﻿@model CoreCommerce.Models.Customer
+@{
+    ViewData["Title"] = "NewCustomer";
+    Layout = "~/Views/Shared/_TestLayout.cshtml";
+}
+
+<br />
+<div class="container mt-4">
+    <h2>Yeni Müşteri Ekle</h2>
+    <form class="form-group" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">Ad</label>
+            @Html.TextBoxFor(customer => customer.name, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="surname" class="form-label">Soyad</label>
+            @Html.TextBoxFor(customer => customer.surname, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="mail" class="form-label">Mail</label>
+            @Html.TextBoxFor(customer => customer.mail, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">Şehir</label>
+            @Html.TextBoxFor(customer => customer.city, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Şifre</label>
+            @Html.TextBoxFor(customer => customer.password, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="ImageFile" class="form-label">Fotoğraf</label>
+            <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+        </div>
+
+        <button class="btn btn-primary">Kaydet</button>
+    </form>
+</div>
+

@@ -1,0 +1,52 @@
+﻿@model CoreCommerce.Models.Customer
+@{
+    ViewData["Title"] = "GetCustomer";
+    Layout = "~/Views/Shared/_TestLayout.cshtml";
+}
+<br />
+<div class="container mt-4">
+    @using (Html.BeginForm("UpdateCustomer", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(customer => customer.id)
+        
+        <div class="mb-3">
+            <label for="name" class="form-label">Ad</label>
+            @Html.TextBoxFor(customer => customer.name, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="surname" class="form-label">Soyad</label>
+            @Html.TextBoxFor(customer => customer.surname, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="mail" class="form-label">Mail</label>
+            @Html.TextBoxFor(customer => customer.mail, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">Şehir</label>
+            @Html.TextBoxFor(customer => customer.city, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Şifre</label>
+            @Html.TextBoxFor(customer => customer.password, new { @class = "form-control" })
+        </div>
+
+        <div class="mb-3">
+            @if (Model.image != null && Model.image.Length > 0)
+            {
+                <div class="mb-2">
+                    <img src="@Url.Action("GetImage", "Customer", new { id = Model.id })"
+                         alt="Ürün Fotoğrafı" style="width:100px; height:100px; object-fit: cover;" />
+                </div>
+            }
+            <label for="ImageFile" class="form-label">Yeni Fotoğraf</label>
+            <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    }
+</div>
+

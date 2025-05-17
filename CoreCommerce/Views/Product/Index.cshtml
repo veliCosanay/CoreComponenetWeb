@@ -1,0 +1,66 @@
+﻿@using CoreCommerce.Models
+@model List<Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_TestLayout.cshtml";
+}
+<br />
+<style>
+    .btn {
+        margin-right: 5px;
+    }
+
+    .action-buttons {
+        white-space: nowrap;
+    }
+</style>
+
+<br />
+<div class="container mt-4">
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <form method="get" action="@Url.Action("Index", "Product")" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Ürün adı ile ara..." value="@ViewBag.CurrentSearch">
+                <button type="submit" class="btn btn-primary">Ara</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Fotoğraf</th>
+        <th>Ad</th>
+        <th>Açıklama</th>
+        <th>Fiyat</th>
+        <th>Stok</th>
+        <th>İşlemler</th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.id</td>
+            <td>
+                @if (product.image != null && product.image.Length > 0)
+                {
+                    <img src="@Url.Action("GetImage", "Product", new { id = product.id })"
+                         alt="Product Image" style="width:50px; height:50px; object-fit: cover;" />
+                }
+                else
+                {
+                    <span>Fotoğraf Yok</span>
+                }
+            </td>
+            <td>@product.name</td>
+            <td>@product.description</td>
+            <td>@product.price</td>
+            <td>@product.stock</td>
+            <td class="action-buttons">
+                <a href="/Product/DeleteProduct/@product.id" class="btn btn-danger">Sil</a>
+                <a href="/Product/GetProduct/@product.id" class="btn btn-success">Güncelle</a>
+            </td>
+        </tr>
+    }
+</table>
+<a href="/Product/NewProduct/" class="btn btn-primary"> Yeni Ürün Ekle </a>

@@ -1,0 +1,68 @@
+﻿@using CoreCommerce.Models
+@model List<Customer>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_TestLayout.cshtml";
+}
+
+<style>
+    .btn {
+        margin-right: 5px;
+    }
+    .action-buttons {
+        white-space: nowrap;
+    }
+</style>
+
+<br />
+<div class="container mt-4">
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <form method="get" action="@Url.Action("Index", "Customer")" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Müşteri adı ile ara..." value="@ViewBag.CurrentSearch">
+                <button type="submit" class="btn btn-primary">Ara</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>Fotoğraf</th>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Mail</th>
+        <th>Şehir</th>
+        <th>Şifre</th>
+        <th>İşlemler</th>
+    </tr>
+    @foreach(var customer in Model)
+    {
+        <tr>
+            <td>@customer.id</td>
+            <td>
+                @if (customer.image != null && customer.image.Length > 0)
+                {
+                    <img src="@Url.Action("GetImage", "Customer", new { id = customer.id })"
+                         alt="Customer Image" style="width:50px; height:50px; object-fit: cover;" />
+                }
+                else
+                {
+                    <span>Fotoğraf Yok</span>
+                }
+            </td>
+            <td>@customer.name</td>
+            <td>@customer.surname</td>
+            <td>@customer.mail</td>
+            <td>@customer.city</td>
+            <td>@customer.password</td>
+            <td customer="action-buttons">
+                <a href="/Customer/DeleteCustomer/@customer.id" class="btn btn-danger">Sil</a>
+                <a href="/Customer/GetCustomer/@customer.id" class="btn btn-success">Güncelle</a>
+            </td>
+        </tr>
+    }
+</table>
+<a href="/Customer/NewCustomer/" class="btn btn-primary"> Yeni Kişi Ekle </a>
+
