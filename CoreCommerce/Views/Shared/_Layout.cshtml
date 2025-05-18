@@ -8,6 +8,46 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap2/dist/css/style.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        .profile-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+        }
+        .profile-menu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .profile-menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+        .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .profile-icon {
+            font-size: 24px;
+            color: #597ef7;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <!-- Topbar Start -->
@@ -33,7 +73,25 @@
                 </form>
             </div>
             <div class="col-lg-3 col-6 text-end">
-                <a href="/Customer/Login" class="btn btn-outline-primary me-2">Giriş Yap</a>
+                @if (Context.Session.GetString("CustomerId") != null)
+                {
+                    <div class="profile-dropdown">
+                        @{
+                            var customer = Context.Session.GetString("CustomerName");
+                        }
+                        <div onclick="toggleProfileMenu()">
+                            <i class="fas fa-user-circle profile-icon"></i>
+                        </div>
+                        <div class="profile-menu" id="profileMenu">
+                            <a href="#" class="text-dark">Merhaba, @customer</a>
+                            <a href="/Home/Logout" class="text-dark">Çıkış Yap</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <a href="/Home/Login" class="btn btn-outline-primary me-2">Giriş Yap</a>
+                }
             </div>
         </div>
     </div>
@@ -44,6 +102,30 @@
     </div>
     @RenderBody()
 
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function toggleProfileMenu() {
+            document.getElementById("profileMenu").classList.toggle("show");
+        }
+
+        // Menüyü başka bir yere tıklandığında kapatma
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-icon') && !event.target.matches('.profile-image')) {
+                var dropdowns = document.getElementsByClassName("profile-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

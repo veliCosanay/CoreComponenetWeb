@@ -25,8 +25,9 @@
     <!-- Page Content -->
     <div style="margin-left:10%">
 
-        <div class="w3-container w3-teal">
-            <h1>Admin Panel</h1>
+        <div class="w3-container w3-teal" style="display: flex; justify-content: space-between; align-items: center; padding: 8px;">
+            <h1 style="margin: 0;">Admin Panel</h1>
+            <a href="/Home/Logout" class="w3-button w3-red">Çıkış Yap</a>
         </div>
 
         <div class="w3-container">
@@ -34,6 +35,11 @@
         </div>
 
     </div>
-
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

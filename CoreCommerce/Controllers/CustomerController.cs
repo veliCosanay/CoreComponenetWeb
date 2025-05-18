@@ -29,17 +29,27 @@ namespace CoreCommerce.Controllers
         [HttpPost]
         public async Task<IActionResult> NewCustomer(Customer customer, IFormFile ImageFile)
         {
-            if (ImageFile != null)
+            try
             {
-                using (var memoryStream = new MemoryStream())
+                if (ImageFile != null)
                 {
-                    await ImageFile.CopyToAsync(memoryStream);
-                    customer.image = memoryStream.ToArray();
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await ImageFile.CopyToAsync(memoryStream);
+                        customer.image = memoryStream.ToArray();
+                    }
                 }
+
+                c.Customers.Add(customer);
+                c.SaveChanges();
+                return RedirectToAction("Index");
             }
-            c.Customers.Add(customer);
-            c.SaveChanges();
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exception: {ex.Message}");
+                ModelState.AddModelError("", "Kaydetme işlemi sırasında bir hata oluştu.");
+                return View(customer);
+            }
         }
 
         public IActionResult GetImage(int id)

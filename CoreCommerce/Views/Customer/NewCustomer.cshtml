@@ -11,26 +11,31 @@
         <div class="mb-3">
             <label for="name" class="form-label">Ad</label>
             @Html.TextBoxFor(customer => customer.name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(customer => customer.name, "", new { @class = "text-danger"})
         </div>
 
         <div class="mb-3">
             <label for="surname" class="form-label">Soyad</label>
             @Html.TextBoxFor(customer => customer.surname, new { @class = "form-control" })
+            @Html.ValidationMessageFor(customer => customer.surname, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             <label for="mail" class="form-label">Mail</label>
             @Html.TextBoxFor(customer => customer.mail, new { @class = "form-control" })
+            @Html.ValidationMessageFor(customer => customer.mail, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             <label for="city" class="form-label">Şehir</label>
             @Html.TextBoxFor(customer => customer.city, new { @class = "form-control" })
+            @Html.ValidationMessageFor(customer => customer.city, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             <label for="password" class="form-label">Şifre</label>
-            @Html.TextBoxFor(customer => customer.password, new { @class = "form-control" })
+            @Html.PasswordFor(customer => customer.password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(customer => customer.password, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
@@ -41,4 +46,10 @@
         <button class="btn btn-primary">Kaydet</button>
     </form>
 </div>
+
+@section Scripts {
+@{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 

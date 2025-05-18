@@ -12,29 +12,42 @@
         <div class="mb-3">
             <label for="name" class="form-label">Ad</label>
             @Html.TextBoxFor(product => product.name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(product => product.name, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             <label for="description" class="form-label">Açıklama</label>
             @Html.TextBoxFor(product => product.description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(product => product.description, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             <label for="price" class="form-label">Fiyat</label>
-            @Html.TextBoxFor(product => product.price, new { @class = "form-control", type = "number", step = "0.01" })
+            @Html.TextBoxFor(product => product.price, new { @class = "form-control", type = "number"})
+            @Html.ValidationMessageFor(product => product.price, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             <label for="stock" class="form-label">Stok</label>
             @Html.TextBoxFor(product => product.stock, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessageFor(product => product.stock, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             <label for="ImageFile" class="form-label">Fotoğraf</label>
             <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+            @if (!ViewData.ModelState.IsValid && ViewData.ModelState["ImageFile"] != null && ViewData.ModelState["ImageFile"].Errors.Any())
+            {
+                <span class="text-danger">@ViewData.ModelState["ImageFile"].Errors.FirstOrDefault()?.ErrorMessage</span>
+            }
         </div>
 
         <button class="btn btn-primary">Kaydet</button>
     </form>
 </div>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
